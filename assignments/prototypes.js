@@ -108,6 +108,45 @@ Humanoid.prototype.greet = function(){
 // console.log(testHumanoid.takeDamage());
 // console.log(testHumanoid.destroy());
 
+// * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
+function Villain(villAttributes){
+  Humanoid.call(this, villAttributes);
+  this.evilness = villAttributes.evilness;
+  this.partingRemark = villAttributes.partingRemark;
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+
+Villain.prototype.attack = function(character, villain){
+  character.healthPoints -= villain.evilness * 5;
+  if (character.healthPoints <= 0){
+    character.destroy();
+    console.log(villain.partingRemark);
+  }
+}
+
+// Villain testing:
+
+const testVillain = new Villain({
+  createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 5,
+    name: 'Mr. Malicious',
+    team: 'Mayhem',
+    weapons: [
+      'Staff of Doom',
+    ],
+    language: 'Common Tongue',
+    evilness: 8,
+    partingRemark: "Mwahahaha!"
+})
+
+console.log(testVillain);
+
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -166,6 +205,13 @@ Humanoid.prototype.greet = function(){
     ],
     language: 'Elvish',
   });
+
+  console.log(testVillain.attack(archer, testVillain));
+  console.log(testVillain.attack(archer, testVillain));
+  console.log(testVillain.attack(archer, testVillain));
+  console.log(testVillain.attack(archer, testVillain));
+  console.log(archer.healthPoints)
+
 
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
