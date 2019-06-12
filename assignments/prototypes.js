@@ -16,12 +16,56 @@
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
+const GameObject = function(attributes){
+  this.createdAt = attributes.createdAt;
+  this.name = attributes.name;
+  this.dimensions = attributes.dimensions;
+}
+
+GameObject.prototype.destroy = function(){
+  return `${this.name} was removed from the game.`
+}
+
+// const testObject = new GameObject({
+//   createdAt: 'December',
+//   name: 'Alice',
+//   dimensions: '34x32'
+// })
+
+// console.log(testObject);
+// console.log(testObject.destroy());
+
 /*
   === CharacterStats ===
   * healthPoints
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+
+function CharacterStats(charAttributes){
+  GameObject.call(this, charAttributes);
+  this.healthPoints = charAttributes.healthPoints;
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype); // This line links GameObject and CharacterStats so that CharacterStats inherits the destroy() method. 
+
+CharacterStats.prototype.takeDamage = function(){
+  return `${this.name} took damage.`;
+};
+
+
+// Testing CharacterStats:
+// const testChar = new CharacterStats({
+//   createdAt: 'January',
+//   name: 'George',
+//   dimensions: '34x32',
+//   healthPoints: 109
+// })
+
+// console.log(testChar);
+// console.log(testChar.takeDamage());
+// console.log(testChar.destroy()); // Checking that we've inherited the destroy() method from GameObject
+
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
